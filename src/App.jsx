@@ -1,0 +1,94 @@
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { extractTextFromImage } from './services/ocrService';
+import { analyzeMedicines } from './services/drugApi';
+import UploadBox from './components/UploadBox';
+import ReportPage from './components/ReportPage';
+import HomePage from './components/HomePage'; // Naya Home Page import kiya
+import { Activity, ShieldCheck } from 'lucide-react';
+import './App.css';
+
+// --- SCANNER PAGE COMPONENT ---
+function ScanPage() {
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const navigate = useNavigate(); 
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+      setErrorMsg('');
+    }
+  };
+
+  const handleAnalyze = async () => {
+    if (!image) return alert("Pehle prescription ki photo upload karein!");
+    setLoading(true);
+    setErrorMsg('');
+    
+    try {
+      const extractedText = await extractTextFromImage(image);
+      if (!extractedText || extractedText.trim() === '') throw new Error("Image se text nahi mila.");
+      
+      const analysisResult = await analyzeMedicines(extractedText);
+      navigate('/report', { state: { reportData: analysisResult } });
+
+    } catch (error) {
+      setErrorMsg(error.message || "Error aa gaya.");
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="app-container">
+      <header className="header">
+        <h1>Scan <span className="gradient-text">Prescription</span></h1>
+        <p>Upload a clear photo of your prescription to get instant medical insights.</p>
+      </header>
+
+      <div className="single-column">
+        <UploadBox 
+          image={image} preview={preview} handleImageUpload={handleImageUpload} 
+          handleAnalyze={handleAnalyze} loading={loading} errorMsg={errorMsg} 
+        />
+      </div>
+    </div>
+  );
+}
+
+
+// --- MAIN APP COMPONENT ---
+function App() {
+  return (
+    <Router>
+      <div className="app-wrapper">
+        <div className="glow-bg glow-1"></div>
+        <div className="glow-bg glow-2"></div>
+
+        <nav className="navbar">
+          {/* Logo click karne par Home par jaye */}
+          <div className="logo" onClick={() => window.location.href = '/'} style={{cursor: 'pointer'}}>
+            <Activity color="#8B5CF6" size={28} />
+            <span>PharmaScan <span className="ai-tag">AI</span></span>
+          </div>
+          <div className="nav-badge">
+            <ShieldCheck size={16} /> Secure Analysis
+          </div>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/scan" element={<ScanPage />} />
+          <Route path="/report" element={<ReportPage />} />
+        </Routes>
+        
+      </div>
+    </Router>
+  );
+}
+
+export default App;

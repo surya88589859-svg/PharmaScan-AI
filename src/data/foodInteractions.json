@@ -1,0 +1,81 @@
+{
+  "warfarin": {
+    "avoid": [
+      "🥬 Leafy Greens (Palak, etc.): Vitamin K se warfarin ka asar kam hota hai.",
+      "🍊 Cranberry/Grapefruit: Bleeding ka risk badha sakta hai."
+    ],
+    "diet": [
+      "🥗 Vitamin K ki matra consistent rakhein (roz same amount khayein)."
+    ],
+    "sideEffects": [
+      "⚠️ Bleeding (naak se khoon, mashudon se khoon aana)."
+    ]
+  },
+  "metronidazole": {
+    "avoid": [
+      "🍺 Alcohol: Bahut khatarnak reaction ho sakta hai. Bilkul na lein."
+    ],
+    "diet": [
+      "💧 Paani zyada piyein."
+    ],
+    "sideEffects": [
+      "⚠️ Ulti, chakkar aana, dhadkan tez hona."
+    ]
+  },
+  "aspirin": {
+    "avoid": [
+      "🍺 Alcohol: Pet mein bleeding ka risk badha sakta hai.",
+      "🌶️ Spicy Food: Pet kharab ho sakta hai."
+    ],
+    "diet": [
+      "🥛 Khaali pet na lein, khaane ke baad lein."
+    ],
+    "sideEffects": [
+      "⚠️ Pet dard, khatti dakar, ya kahin se khoon aana."
+    ]
+  },
+  "paracetamol": {
+    "avoid": [
+      "🍺 Alcohol: Liver ko nuksan pahuncha sakta hai."
+    ],
+    "diet": [
+      "💧 Achhi matra mein paani piyein."
+    ],
+    "sideEffects": [
+      "⚠️ Agar 3 din se zyada bukhar rahe toh doctor ko dikhayein."
+    ]
+  },
+  "atorvastatin": {
+    "avoid": [
+      "🍊 Grapefruit Juice: Dawai ka level blood mein badha sakta hai."
+    ],
+    "diet": [
+      "🥗 Fibre wali cheezein khayein (Oats, Fruits)."
+    ],
+    "sideEffects": [
+      "⚠️ Muscle pain ya kamzori (turant doctor ko batayein)."
+    ]
+  },
+  "metformin": {
+    "avoid": [
+      "🍺 Alcohol: Lactic acidosis ka khatra ho sakta hai."
+    ],
+    "diet": [
+      "🍽️ Hamesha khaane ke saath ya baad mein lein (pet kharab nahi hoga)."
+    ],
+    "sideEffects": [
+      "⚠️ Pet dard, ulti, ya dast (loose motion)."
+    ]
+  },
+  "amoxicillin": {
+    "avoid": [
+      "🥛 Dairy (Doodh/Dahi): Dawai ka absorption kam kar sakta hai."
+    ],
+    "diet": [
+      "💧 Paani ke saath lein."
+    ],
+    "sideEffects": [
+      "⚠️ Dast (loose motion), ya skin par rash."
+    ]
+  }
+}
