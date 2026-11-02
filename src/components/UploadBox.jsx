@@ -10,25 +10,17 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
   const startCamera = async () => {
     try {
       setIsCameraOpen(true);
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } 
-      });
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
       setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
+      if (videoRef.current) videoRef.current.srcObject = mediaStream;
     } catch (err) {
-      console.error("Camera access error:", err);
       alert("Camera access nahi mila. Kripya permission dein.");
       setIsCameraOpen(false);
     }
   };
 
   const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-    }
+    if (stream) { stream.getTracks().forEach(track => track.stop()); setStream(null); }
     setIsCameraOpen(false);
   };
 
@@ -52,11 +44,7 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
   };
 
   useEffect(() => {
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-    };
+    return () => { if (stream) stream.getTracks().forEach(track => track.stop()); };
   }, [stream]);
 
   return (
@@ -70,7 +58,6 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
         <div className="camera-container">
           <video ref={videoRef} autoPlay playsInline className="camera-feed"></video>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-          
           <div className="camera-controls">
             <button onClick={stopCamera} className="camera-btn cancel"><X size={20} /></button>
             <button onClick={capturePhoto} className="camera-btn capture"><Check size={28} /></button>
@@ -78,13 +65,11 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
         </div>
       ) : (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          
           <div className="scanner-box">
             {preview ? (
-              <div className="preview-container">
+              <div className="preview-wrapper">
                 <img src={preview} alt="Prescription" className="preview-img" />
-                <label htmlFor="file-upload" className="change-btn">
-                  <ImageIcon size={16} /> Change Image
-                </label>
               </div>
             ) : (
               <div className="upload-options">
@@ -108,23 +93,18 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
               </div>
             )}
             
-            {/* Input ko 100% Hide karne ke liye display none aur height 0 */}
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={handleImageUpload} 
-              id="file-upload" 
-              style={{ display: 'none', opacity: 0, width: 0, height: 0, position: 'absolute' }} 
-            />
+            {/* Hidden File Input */}
+            <input type="file" accept="image/*" onChange={handleImageUpload} id="file-upload" style={{ display: 'none' }} />
           </div>
 
-          {/* Button ko center aur full width karne ke liye style lagayi hai */}
-          <button 
-            onClick={handleAnalyze} 
-            disabled={loading || !image} 
-            className="btn-glow"
-            style={{ width: '100%', maxWidth: '300px', margin: '20px auto 0 auto', display: 'flex', justifyContent: 'center' }}
-          >
+          {/* Naya Change Image Button - Sirf tab dikhega jab photo ho */}
+          {preview && (
+            <label htmlFor="file-upload" className="new-change-btn">
+              <ImageIcon size={16} /> Change Image
+            </label>
+          )}
+
+          <button onClick={handleAnalyze} disabled={loading || !image} className="btn-glow">
             {loading ? "Scanning Data..." : "⚡ Run AI Analysis"}
           </button>
         </div>

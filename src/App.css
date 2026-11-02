@@ -232,3 +232,73 @@ input[type="file"] { display: none !important; visibility: hidden !important; op
   overflow: hidden !important;
   padding: 10px !important;
 }
+
+/* =========================================
+   FIX: PHOTO PREVIEW & CHANGE BUTTON
+   ========================================= */
+
+/* Photo Container - Ek perfect box banayenge */
+.scanner-box {
+  padding: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 220px !important;
+  overflow: hidden !important;
+}
+
+/* Photo Wrapper - Iske andar photo lock rahegi */
+.preview-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Photo - Size fix aur square/rectangle fit */
+.preview-img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 200px !important;
+  object-fit: contain !important; /* Photo kate nahi gi, puri dikhegi */
+  border-radius: 8px !important;
+  display: block !important;
+}
+
+/* Change Image Button - Photo ke niche center mein */
+.new-change-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(139, 92, 246, 0.1); /* Purple tint */
+  color: #A78BFA;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.new-change-btn:hover {
+  background: rgba(139, 92, 246, 0.2);
+  color: #fff;
+}
+
+/* Run AI Analysis Button */
+.upload-section .btn-glow {
+  width: 100% !important; 
+  max-width: 300px !important; 
+  margin: 20px auto 0 auto !important; 
+  display: flex !important; 
+  justify-content: center !important; 
+  align-items: center !important; 
+  border-radius: 30px !important;
+}
