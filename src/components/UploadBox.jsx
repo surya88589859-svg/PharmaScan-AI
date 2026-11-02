@@ -7,12 +7,11 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
   const canvasRef = useRef(null);
   const [stream, setStream] = useState(null);
 
-  // Camera Start Karne ka Function
   const startCamera = async () => {
     try {
       setIsCameraOpen(true);
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } // Back camera
+        video: { facingMode: 'environment' } 
       });
       setStream(mediaStream);
       if (videoRef.current) {
@@ -25,7 +24,6 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
     }
   };
 
-  // Camera Band Karne ka Function
   const stopCamera = () => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
@@ -34,22 +32,18 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
     setIsCameraOpen(false);
   };
 
-  // Photo Click Karne ka Function
   const capturePhoto = () => {
     if (videoRef.current && canvasRef.current) {
       const video = videoRef.current;
       const canvas = canvasRef.current;
-      
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-      
       const context = canvas.getContext('2d');
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       
       canvas.toBlob((blob) => {
         if (blob) {
           const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
-          // App.jsx wale function ko call karein
           handleImageUpload({ target: { files: [file] } });
           stopCamera();
         }
@@ -57,7 +51,6 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
     }
   };
 
-  // Component unmount hone par camera band karein
   useEffect(() => {
     return () => {
       if (stream) {
@@ -67,21 +60,15 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
   }, [stream]);
 
   return (
-    <div className="upload-section glass-panel">
+    <div className="upload-section">
       <div className="section-header">
         <h2>Upload Prescription</h2>
         <span className="step-badge">Step 1</span>
       </div>
       
-      {/* Agar Camera Khula Hai Toh Video Dikhao */}
       {isCameraOpen ? (
         <div className="camera-container">
-          <video 
-            ref={videoRef} 
-            autoPlay 
-            playsInline 
-            className="camera-feed"
-          ></video>
+          <video ref={videoRef} autoPlay playsInline className="camera-feed"></video>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           
           <div className="camera-controls">
@@ -90,8 +77,8 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
           </div>
         </div>
       ) : (
-        <>
-          <div className={`scanner-box ${preview ? 'has-preview' : ''}`}>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="scanner-box">
             {preview ? (
               <div className="preview-container">
                 <img src={preview} alt="Prescription" className="preview-img" />
@@ -101,7 +88,6 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
               </div>
             ) : (
               <div className="upload-options">
-                {/* 1. File Upload Option */}
                 <label htmlFor="file-upload" className="upload-placeholder">
                   <div className="upload-icon-wrapper">
                     <UploadCloud size={32} color="#8B5CF6" />
@@ -112,7 +98,6 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
 
                 <div className="divider">OR</div>
 
-                {/* 2. Camera Option */}
                 <button onClick={startCamera} className="upload-placeholder camera-option">
                   <div className="upload-icon-wrapper">
                     <Camera size={32} color="#10B981" />
@@ -123,26 +108,26 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
               </div>
             )}
             
-            {/* File Input (Hidden by default) */}
-           <input 
-  type="file" 
-  accept="image/*" 
-  onChange={handleImageUpload} 
-  className="file-input" 
-  id="file-upload" 
-  style={{ display: 'none', visibility: 'hidden', position: 'absolute', width: '0', height: '0' }} 
-/>
+            {/* Input ko 100% Hide karne ke liye display none aur height 0 */}
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageUpload} 
+              id="file-upload" 
+              style={{ display: 'none', opacity: 0, width: 0, height: 0, position: 'absolute' }} 
+            />
           </div>
 
-          {/* Run AI Analysis Button */}
-          <button onClick={handleAnalyze} disabled={loading || !image} className="btn-glow">
-            {loading ? (
-              <span className="btn-loading"><div className="spinner-small"></div> Scanning Data...</span>
-            ) : (
-              <><span className="icon">⚡</span> Run AI Analysis</>
-            )}
+          {/* Button ko center aur full width karne ke liye style lagayi hai */}
+          <button 
+            onClick={handleAnalyze} 
+            disabled={loading || !image} 
+            className="btn-glow"
+            style={{ width: '100%', maxWidth: '300px', margin: '20px auto 0 auto', display: 'flex', justifyContent: 'center' }}
+          >
+            {loading ? "Scanning Data..." : "⚡ Run AI Analysis"}
           </button>
-        </>
+        </div>
       )}
 
       {errorMsg && <div className="error-alert">{errorMsg}</div>}
