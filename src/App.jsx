@@ -4,7 +4,7 @@ import { extractTextFromImage } from './services/ocrService';
 import { analyzeMedicines } from './services/drugApi';
 import UploadBox from './components/UploadBox';
 import ReportPage from './components/ReportPage';
-import HomePage from './components/HomePage'; // Naya Home Page import kiya
+import HomePage from './components/HomePage';
 import { Activity, ShieldCheck } from 'lucide-react';
 import './App.css';
 
@@ -32,24 +32,35 @@ function ScanPage() {
     
     try {
       const extractedText = await extractTextFromImage(image);
-      if (!extractedText || extractedText.trim() === '') throw new Error("Image se text nahi mila.");
+      
+      if (!extractedText || extractedText.trim() === '') {
+        throw new Error("Image se koi text nahi mila. Kripya clear photo try karein.");
+      }
       
       const analysisResult = await analyzeMedicines(extractedText);
+
+      // AGAR DRUG API NE ERROR DIYA HAI (GALAT PHOTO PAR)
+      if (analysisResult.status === "error") {
+        throw new Error(analysisResult.medicines[0] || "Koi valid dawai nahi mili.");
+      }
+
+      // Sab theek hone par report page par bhejein
       navigate('/report', { state: { reportData: analysisResult } });
 
     } catch (error) {
-      setErrorMsg(error.message || "Error aa gaya.");
+      console.error("Error:", error);
+      setErrorMsg(error.message || "Photo padhne mein problem aayi. Kripya sahi prescription daalein.");
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <div className="app-container">
-      
-<header className="header" style={{ textAlign: 'center', marginBottom: '20px' }}>
-  <h1 style={{ color: '#FFFFFF', fontSize: '2rem', fontWeight: '800' }}>Scan Prescription</h1>
-  <p style={{ color: '#94A3B8', fontSize: '0.9rem', marginTop: '5px' }}>Upload a clear photo of your prescription to get instant medical insights.</p>
-</header>
+      <header className="header" style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <h1 style={{ color: '#FFFFFF', fontSize: '2rem', fontWeight: '800' }}>Scan Prescription</h1>
+        <p style={{ color: '#94A3B8', fontSize: '0.9rem', marginTop: '5px' }}>Upload a clear photo of your prescription to get instant medical insights.</p>
+      </header>
 
       <div className="single-column">
         <UploadBox 
@@ -71,7 +82,6 @@ function App() {
         <div className="glow-bg glow-2"></div>
 
         <nav className="navbar">
-          {/* Logo click karne par Home par jaye */}
           <div className="logo" onClick={() => window.location.href = '/'} style={{cursor: 'pointer'}}>
             <Activity color="#8B5CF6" size={28} />
             <span>PharmaScan <span className="ai-tag">AI</span></span>

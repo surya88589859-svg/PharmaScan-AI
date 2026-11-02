@@ -2,27 +2,19 @@
 
 export const extractTextFromImage = async (imageFile) => {
   try {
-    // Image ko base64 mein convert karein (Puter.js file object bhi accept karta hai)
-    const base64Image = await convertToBase64(imageFile);
-
-    // Puter.js ke through Mistral OCR call karein
-    const text = await window.puter.ai.img2txt({
-      source: base64Image,
-      provider: 'mistral'
+    const text = await puter.ai.img2txt(imageFile, {
+      provider: 'mistral' 
     });
 
-    return text || "";
+    // AGAR TEXT NAHI MILA YA KHALI HAI
+    if (!text || text.trim().length < 5) {
+      throw new Error("Is image mein koi valid text nahi mila. Kripya sahi prescription upload karein.");
+    }
+
+    return text;
   } catch (error) {
     console.error("Puter OCR Error:", error);
-    throw new Error("Image padhne mein problem aayi. Dobara try karein.");
+    // Error ko aage bhej dein taaki App.jsx use pakad sake
+    throw error; 
   }
-};
-
-const convertToBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 };

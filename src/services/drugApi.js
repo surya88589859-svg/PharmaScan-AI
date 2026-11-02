@@ -72,18 +72,30 @@ export const analyzeMedicines = async (medicineText) => {
   }
 
   const uniqueMeds = [...new Set(cleanMeds)];
-  const finalMedsToCheck = uniqueMeds.length > 0 ? uniqueMeds.slice(0, 6) : ["Paracetamol", "Warfarin", "Aspirin", "Metformin"];
+  
+  // FAKE DATA HATA DIYA HAI. Ab sirf wahi check hoga jo OCR se mila hai.
+  const finalMedsToCheck = uniqueMeds.slice(0, 6);
+
+  // Agar OCR ne koi dawai nahi dhoondhi, toh yahin se error return kar do
+  if (finalMedsToCheck.length === 0) {
+    return {
+      status: "error",
+      medicines: ["Koi valid dawai nahi mili. Kripya sahi prescription upload karein."],
+      drugInteractions: [],
+      avoidList: [],
+      dietList: [],
+      sideEffectsList: []
+    };
+  }
 
   const medResults = [];
   const verifiedMeds = []; 
   
-  // Naye arrays alag-alag data ke liye
   let avoidList = [];
   let dietList = [];
   let sideEffectsList = [];
 
   for (const med of finalMedsToCheck) {
-    // Yahan getRxCUI call ho raha hai
     const rxcui = await getRxCUI(med);
     
     if (rxcui) {
@@ -93,7 +105,7 @@ export const analyzeMedicines = async (medicineText) => {
       medResults.push(`${med} ❌ (Not Found in DB)`);
     }
 
-    // FOOD & DIET INTERACTION (Naya JSON format)
+    // FOOD & DIET INTERACTION
     const medLower = med.toLowerCase();
     const matchedFoodKey = Object.keys(foodData).find(key => 
       medLower.includes(key) || key.includes(medLower)
@@ -135,7 +147,6 @@ export const analyzeMedicines = async (medicineText) => {
     interactionsFound.push("No known severe interactions found between these medicines in FDA labels.");
   }
 
-  // Default values agar kuch na mile
   if (avoidList.length === 0) avoidList.push("No specific food to avoid found.");
   if (dietList.length === 0) dietList.push("Take with water. Maintain a balanced diet.");
   if (sideEffectsList.length === 0) sideEffectsList.push("No specific side effects listed. Contact doctor if you feel unwell.");
