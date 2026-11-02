@@ -12,7 +12,7 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
     try {
       setIsCameraOpen(true);
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } // 'environment' ka matlab back camera
+        video: { facingMode: 'environment' } // Back camera
       });
       setStream(mediaStream);
       if (videoRef.current) {
@@ -40,31 +40,24 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
       const video = videoRef.current;
       const canvas = canvasRef.current;
       
-      // Canvas ka size video ke size ke barabar karein
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       
-      // Video ka current frame canvas par draw karein
       const context = canvas.getContext('2d');
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       
-      // Canvas ko image file mein convert karein
       canvas.toBlob((blob) => {
         if (blob) {
-          // Blob ko File object mein badlein taaki handleImageUpload ise accept kare
           const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
-          
-          // App.jsx wale function ko call karein jo image set karta hai
-          // Hum ek dummy event object bana rahe hain taaki handleImageUpload ka code na toote
+          // App.jsx wale function ko call karein
           handleImageUpload({ target: { files: [file] } });
-          
           stopCamera();
         }
       }, 'image/jpeg', 0.9);
     }
   };
 
-  // Jab component screen se hate, toh camera band ho jaye
+  // Component unmount hone par camera band karein
   useEffect(() => {
     return () => {
       if (stream) {
@@ -108,7 +101,7 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
               </div>
             ) : (
               <div className="upload-options">
-                {/* File Upload Option */}
+                {/* 1. File Upload Option */}
                 <label htmlFor="file-upload" className="upload-placeholder">
                   <div className="upload-icon-wrapper">
                     <UploadCloud size={32} color="#8B5CF6" />
@@ -119,7 +112,7 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
 
                 <div className="divider">OR</div>
 
-                {/* Camera Option */}
+                {/* 2. Camera Option */}
                 <button onClick={startCamera} className="upload-placeholder camera-option">
                   <div className="upload-icon-wrapper">
                     <Camera size={32} color="#10B981" />
@@ -130,9 +123,18 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
               </div>
             )}
             
-            <input type="file" accept="image/*" onChange={handleImageUpload} className="file-input" id="file-upload" />
+            {/* File Input (Hidden by default) */}
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageUpload} 
+              className="file-input" 
+              id="file-upload" 
+              style={{ display: 'none' }} /* EXTRA SAFETY: Direct hide kiya hai */
+            />
           </div>
 
+          {/* Run AI Analysis Button */}
           <button onClick={handleAnalyze} disabled={loading || !image} className="btn-glow">
             {loading ? (
               <span className="btn-loading"><div className="spinner-small"></div> Scanning Data...</span>

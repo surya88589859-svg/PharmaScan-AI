@@ -25,9 +25,9 @@ body {
   background-color: var(--bg);
   color: var(--text-main);
   height: 100vh;
-  height: 100dvh; /* Mobile browsers ke liye perfect height */
+  height: 100dvh; /* Mobile ki asli height */
   width: 100vw;
-  overflow: hidden; 
+  overflow: hidden; /* Scroll lock */
 }
 
 .app-wrapper {
@@ -63,37 +63,47 @@ body {
   overflow-y: auto; 
 }
 
-/* --- HOME PAGE (Perfect Grid, No Scroll) --- */
+/* =========================================
+   HOME PAGE (Perfectly Assembled & Fitted)
+   ========================================= */
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly; /* Sab kuch barabar faila hua */
+  justify-content: center; /* Sab kuch center mein assemble hoga */
+  gap: 15px; /* Har section ke beech ekdum perfect gap */
   overflow: hidden; 
   padding: 5px;
   height: 100%;
 }
 
-.hero-section { text-align: center; display: flex; flex-direction: column; align-items: center; }
+/* 1. Hero Section */
+.hero-section { 
+  text-align: center; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
 .badge-top { 
   display: inline-flex; align-items: center; gap: 6px; 
   background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
-  padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; color: #A78BFA; margin-bottom: 8px; font-weight: 600; 
+  padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; color: #A78BFA; 
+  margin-bottom: 8px; font-weight: 600; 
 }
-.hero-title { font-size: 2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; line-height: 1.1; }
+.hero-title { font-size: 2.1rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; line-height: 1.1; }
 .gradient-text { background: linear-gradient(135deg, #A78BFA, #3B82F6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.hero-subtitle { color: var(--text-muted); font-size: 0.8rem; max-width: 280px; margin-bottom: 15px; line-height: 1.4; }
+.hero-subtitle { color: var(--text-muted); font-size: 0.8rem; max-width: 280px; margin-bottom: 12px; line-height: 1.4; }
 
 .hero-actions { display: flex; justify-content: center; width: 100%; }
 .btn-glow { 
-  width: auto; padding: 10px 25px; background: linear-gradient(135deg, #8B5CF6, #6D28D9); 
-  color: white; border: none; border-radius: 30px; font-size: 0.9rem; font-weight: 700; 
+  width: auto; padding: 10px 30px; background: linear-gradient(135deg, #8B5CF6, #6D28D9); 
+  color: white; border: none; border-radius: 30px; font-size: 0.95rem; font-weight: 700; 
   display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; 
   box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.4); 
 }
 
-/* Team Section */
-.team-section { width: 100%; max-width: 500px; margin: 0 auto; }
-.team-header { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px; }
+/* 2. Team Section */
+.team-section { width: 100%; max-width: 450px; margin: 0 auto; }
+.team-header { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
 .team-header h2 { font-size: 0.95rem; font-weight: 700; color: #fff; }
 
 .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -106,8 +116,11 @@ body {
 .dev-info-small h3 { font-size: 0.75rem; font-weight: 700; color: #fff; margin-bottom: 2px;}
 .dev-info-small p { font-size: 0.6rem; color: var(--text-muted); }
 
-/* Features Grid */
-.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 500px; margin: 0 auto; }
+/* 3. Features Grid */
+.features-grid { 
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; 
+  width: 100%; max-width: 450px; margin: 0 auto; 
+}
 .feature-box-small { 
   display: flex; flex-direction: column; align-items: center; justify-content: center; 
   gap: 5px; padding: 10px 5px; border-radius: 10px; background: rgba(255,255,255,0.03); 
@@ -116,21 +129,22 @@ body {
 .feature-box-small svg { width: 18px; height: 18px; }
 .feature-box-small h4 { font-size: 0.65rem; color: #fff; }
 
-/* --- SCANNER & REPORT PAGES --- */
+/* =========================================
+   SCANNER & REPORT PAGES
+   ========================================= */
 .upload-section, .report-container { 
-  background: var(--surface); border-radius: 16px; padding: 15px; 
+  background: var(--surface); border-radius: 16px; padding: 20px 15px; 
   border: 1px solid var(--surface-border); max-width: 600px; margin: 0 auto; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
 }
 
-/* Scan Page Heading Fix */
-.scan-page-title {
-  font-size: 1.8rem; font-weight: 800; color: #FFFFFF !important; 
-  text-align: center; margin-bottom: 10px; margin-top: 10px;
-}
+.scan-page-title { font-size: 1.8rem; font-weight: 800; color: #FFFFFF !important; text-align: center; margin-bottom: 15px; margin-top: 10px; }
 
-.section-header h2 { font-size: 1rem; margin-bottom: 10px; }
+.section-header { width: 100%; display: flex; justify-content: space-between; margin-bottom: 15px; }
+.section-header h2 { font-size: 1.1rem; }
+
 .scanner-box { 
-  border: 2px dashed rgba(139, 92, 246, 0.3); border-radius: 12px; 
+  width: 100%; border: 2px dashed rgba(139, 92, 246, 0.3); border-radius: 12px; 
   background: rgba(139, 92, 246, 0.03); min-height: 180px; 
   display: flex; flex-direction: column; align-items: center; justify-content: center; 
 }
@@ -141,46 +155,43 @@ body {
 .upload-placeholder p { color: var(--text-muted); font-size: 0.7rem; }
 .divider { color: var(--text-muted); font-size: 0.7rem; opacity: 0.5; font-weight: 600;}
 
-/* Run AI Analysis Button Fix */
-.btn-primary {
-  width: 100% !important;
-  margin-top: 15px !important;
-  padding: 12px !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
+/* Fix: Run AI Analysis Button Perfect Center */
+.upload-section .btn-glow, .btn-primary {
+  width: 100% !important; max-width: 350px !important; margin: 20px auto 0 auto !important; 
+  padding: 14px 20px !important; display: flex !important; justify-content: center !important; 
+  align-items: center !important; text-align: center !important; border-radius: 12px !important;
 }
 
 /* Camera Section */
-.camera-container { position: relative; width: 100%; height: 200px; background: #000; border-radius: 12px; overflow: hidden; }
+.camera-container { position: relative; width: 100%; height: 220px; background: #000; border-radius: 12px; overflow: hidden; }
 .camera-feed { width: 100%; height: 100%; object-fit: cover; }
-.camera-controls { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; gap: 20px; }
-.camera-btn.capture { width: 45px; height: 45px; background: var(--success); border-radius: 50%; border: none; color: white; }
-.camera-btn.cancel { width: 35px; height: 35px; background: rgba(255,255,255,0.2); border-radius: 50%; border: none; color: white; }
+.camera-controls { position: absolute; bottom: 15px; width: 100%; display: flex; justify-content: center; gap: 30px; }
+.camera-btn.capture { width: 50px; height: 50px; background: var(--success); border-radius: 50%; border: none; color: white; }
+.camera-btn.cancel { width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; border: none; color: white; }
 
-/* Camera Button Box Fix */
 .camera-option { background: transparent !important; border: none !important; outline: none !important; box-shadow: none !important; padding: 0; width: 100%; }
 .camera-option:focus, .camera-option:active { outline: none !important; border: none !important; }
+input[type="file"] { display: none !important; }
 
 /* Report Page */
-.report-header-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.report-header-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; width: 100%; }
 .report-header-nav h1 { font-size: 1.2rem; }
 .back-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 10px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer; }
 
-.status-banner { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
+.status-banner { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 10px; margin-bottom: 15px; width: 100%; }
 .status-banner.danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 .status-banner.warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
 .status-banner.success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 .status-banner h3 { font-size: 0.9rem; }
 .status-banner p { font-size: 0.7rem; opacity: 0.8; }
 
-.card-section { margin-bottom: 15px; }
+.card-section { margin-bottom: 15px; width: 100%; }
 .card-section h4 { font-size: 0.85rem; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
 .med-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .med-pill { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; }
 .interaction-alert { background: rgba(239, 68, 68, 0.1); border-left: 3px solid var(--danger); padding: 10px; border-radius: 6px; font-size: 0.75rem; color: #FCA5A5; margin-bottom: 6px; }
-.info-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-.info-box { padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.02); }
+.info-grid { display: grid; grid-template-columns: 1fr; gap: 8px; width: 100%; }
+.info-box { padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.02); width: 100%; }
 .info-box h4 { font-size: 0.8rem; margin-bottom: 5px; }
 .info-box ul { padding-left: 15px; font-size: 0.75rem; color: var(--text-muted); }
 .info-box.avoid { border-left: 3px solid var(--danger); }
