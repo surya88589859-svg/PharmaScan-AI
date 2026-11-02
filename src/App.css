@@ -197,3 +197,37 @@ input[type="file"] { display: none !important; }
 .info-box.avoid { border-left: 3px solid var(--danger); }
 .info-box.diet { border-left: 3px solid var(--success); }
 .info-box.side-effects { border-left: 3px solid var(--warning); }
+
+
+/* =========================================
+   ULTIMATE FIX: Button Center & Layout
+   ========================================= */
+
+/* Button ko bilkul center mein laane ke liye */
+.upload-section .btn-glow {
+  width: 80% !important; /* Mobile par thoda sa margin chhodega */
+  max-width: 300px !important;
+  margin: 15px auto 0 auto !important; /* Auto margin se center hoga */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12px 20px !important;
+  border-radius: 30px !important;
+  font-size: 1rem !important;
+}
+
+/* Extra File Input ko hide karne ke liye ultimate CSS */
+input[type="file"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  z-index: -1 !important;
+}
+
+/* Scan Page Title ko White karne ke liye */
+.header h1 {
+  color: #FFFFFF !important;
+}

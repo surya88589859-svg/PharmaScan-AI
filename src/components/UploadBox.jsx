@@ -124,14 +124,14 @@ function UploadBox({ image, preview, handleImageUpload, handleAnalyze, loading, 
             )}
             
             {/* File Input (Hidden by default) */}
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={handleImageUpload} 
-              className="file-input" 
-              id="file-upload" 
-              style={{ display: 'none' }} /* EXTRA SAFETY: Direct hide kiya hai */
-            />
+           <input 
+  type="file" 
+  accept="image/*" 
+  onChange={handleImageUpload} 
+  className="file-input" 
+  id="file-upload" 
+  style={{ display: 'none', visibility: 'hidden', position: 'absolute', width: '0', height: '0' }} 
+/>
           </div>
 
           {/* Run AI Analysis Button */}

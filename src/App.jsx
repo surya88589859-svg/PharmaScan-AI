@@ -45,10 +45,11 @@ function ScanPage() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <h1>Scan <span className="gradient-text">Prescription</span></h1>
-        <p>Upload a clear photo of your prescription to get instant medical insights.</p>
-      </header>
+      // Naya (Isko paste karein):
+<header className="header" style={{ textAlign: 'center', marginBottom: '20px' }}>
+  <h1 style={{ color: '#FFFFFF', fontSize: '2rem', fontWeight: '800' }}>Scan Prescription</h1>
+  <p style={{ color: '#94A3B8', fontSize: '0.9rem', marginTop: '5px' }}>Upload a clear photo of your prescription to get instant medical insights.</p>
+</header>
 
       <div className="single-column">
         <UploadBox 
